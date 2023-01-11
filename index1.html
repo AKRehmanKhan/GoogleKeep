@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/43f906e336.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    #top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10%;
+        background-color: #f5c842;
+    }
+
+    #heading {
+        color: green;
+        position: absolute;
+        left: 10px;
+        top: -10px;
+    }
+
+
+
+    .note {
+        position: relative;
+        margin-top: 10px;
+        margin-left:6px;
+        margin-bottom: 10px;
+        margin-right: 6px;
+        height: 200px;
+        width: 201px;
+        padding: 7px;
+        border: 7px;
+        box-shadow: 0px 1px 7px black;
+        display: inline-block;
+    }
+
+    div input {
+        width: 88%;
+        padding: 4px 10px;
+        margin-bottom: 3px;
+        font-size: 1rem;
+        resize: none;
+        border-color: #f5c842;
+        border-radius: 5px;
+        font-weight: bold;
+        color: green;
+
+    }
+
+    div textarea {
+        width: 88%;
+        height: 60%;
+        padding: 4px 10px;
+        font-size: 1rem;
+        resize: none;
+        border-color: green;
+        border-width: 2px;
+        border-radius: 5px;
+        color: #423f35fd;
+
+    }
+
+    .buttons {
+        margin-top: 1px;
+        margin-bottom: 1px;
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+
+    .hidden {
+        opacity: 60%;
+    }
+
+    #edit {
+        outline: none;
+        background: none;
+        border: 0;
+        position: relative;
+        margin-left: -5px;
+
+    }
+
+    #delete {
+        outline: none;
+        background: none;
+        border: 0;
+        position: relative;
+        margin-left: -41px;
+        margin-right: auto;
+
+    }
+
+    .round-button {
+        width: 40%;
+    }
+
+    .round-button-circle {
+        width: 40%;
+        height: 0;
+        padding-bottom: 40%;
+        border-radius: 50%;
+        border: 2px solid white;
+        overflow: hidden;
+
+        background: green;
+        box-shadow: 0 0 3px gray;
+    }
+
+    .round-button-circlee {
+        width: 40%;
+        height: 0;
+        padding-bottom: 40%;
+        border-radius: 50%;
+        border: 2px solid white;
+        overflow: hidden;
+
+        background: red;
+        box-shadow: 0 0 3px gray;
+    }
+
+    .round-button-circlee:hover {
+        background: #f5c842;
+    }
+
+    .round-button-circle:hover {
+        background: #f5c842;
+    }
+
+    .round-button span {
+        display: block;
+
+        width: 100%;
+        padding-top: 50%;
+        padding-bottom: 50%;
+        line-height: 1em;
+        margin-top: -0.5em;
+
+        text-align: center;
+        color: white;
+        font-family: Verdana;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .buttonn {
+
+        position: absolute;
+        left: 90%;
+        top: 15%;
+
+        color: green;
+
+        cursor: pointer;
+        height: 40px;
+        display: inline-block;
+
+        background-color: transparent;
+        text-transform: uppercase;
+        font-size: 15px;
+        transition: all 0.3s;
+        font-weight: bold;
+        overflow: hidden;
+        z-index: 1;
+        border: transparent;
+
+    }
+
+    .buttonn:after {
+
+        background-color: transparent;
+
+    }
+
+    .buttonn:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 80%;
+        background-color: #f5c842;
+
+        transition: all 0.3s;
+        border-radius: 10rem;
+        z-index: -1;
+
+    }
+
+    .buttonn:hover {
+        color: #fff;
+    }
+
+    .buttonn:hover:before {
+        width: 100%;
+
+    }
+</style>
+
+<body>
+
+    <div id="top">
+        <h1 id="heading"> <i class="fas fa-sticky-note background-hidden=true"></i> Google Keep</h1>
+    </div>
+
+    <button class="buttonn" onclick="addNote()">
+        <p><i class="fa fa-plus" aria-hidden="true"></i> Add Note</p></i>
+    </button>
+
+    <br>
+    <br>
+    <br>
+
+    </div>
+
+    <script>
+
+        updateLS=()=>
+        {
+            let titleareas = document.querySelectorAll('input');
+            const arr1 = [];
+            titleareas.forEach((element) => {
+                return arr1.push(element.value)
+            });
+
+           let txtareas= document.querySelectorAll('textarea');
+           const arr2=[];
+           txtareas.forEach((element) => {
+               return arr2.push(element.value)
+           });
+             localStorage.setItem('notetext',JSON.stringify(arr2));
+             localStorage.setItem('notetitle',JSON.stringify(arr1));
+            
+           console.log(localStorage.getItem('notetext'));
+        }
+ 
+        const creatingHTMLofNote=()=>
+        {
+            const note = document.createElement('div');
+            note.classList.add('note');
+            const htmlData = `  <input type="text" placeholder="Title"></input>
+                                <br>
+                                <textarea type="text" placeholder="Type Note"></textarea>
+                               
+                                <p class="buttons">
+                        
+                                    <button id="edit" class="round-button">
+                                        <div class="round-button-circle">
+                                            <span class="round-button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                                        </div>
+                                    </button>
+                                    </div>
+
+                                        
+ 
+                                    <button id="delete" class="round-button">
+                                        <div class="round-button-circlee">
+                                            <span class="round-button"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                        </div>
+                                    </button>
+                                      
+                                    
+                                </p>`;
+            note.insertAdjacentHTML('afterbegin', htmlData);
+            document.body.appendChild(note);  
+            return note;
+        }
+        const getReferences =(note)=>
+        {
+
+            let arr=[];
+            arr.push(note.querySelector("#delete"));
+            arr.push(note.querySelector("#edit"));
+            arr.push( note.querySelector("textarea"));
+            arr.push( note.querySelector("input"));
+            return arr;
+        }
+
+        const displayOnpageReload =(textTitle, text, title, textarea)=>
+        {
+
+            // when we have note and we reload page then textboxes are not empty so it will disable them
+            // and fill them
+            // when we create new note text boxes are empty so it will enable them
+            if (textTitle != "" || text != "") {
+                title.disabled = true;
+                textarea.disabled = true;
+                 title.classList.add('hidden');
+                 textarea.classList.add('hidden');
+            }
+            else {
+                title.disabled = false;
+                textarea.disabled = false;
+                title.classList.remove('hidden');
+                textarea.classList.remove('hidden')
+            }
+
+            textarea.value = text;
+            title.value = textTitle; 
+
+        }
+        
+        const reloadPage=()=>
+        {
+          // this function will called automatically on page load
+          // it will fetch data from local storage and retrieve data 
+         //it is needed so data is not lost on page reload   
+         const notetext = JSON.parse(localStorage.getItem('notetext'));
+         const notetitle = JSON.parse(localStorage.getItem('notetitle'));
+
+           
+            for (let i = 0, j = 0; i < notetext.length; i++, j++) {
+                addNote(notetitle[j],notetext[i]);
+            }
+        }
+
+        const addNote=(textTitle = "",text="")=>
+        {
+            
+          // creating htmlcss of note
+          const note= creatingHTMLofNote();
+
+          // getting  references and storing htem in variables
+          let arr= getReferences(note);
+          let[Delete,edit,textarea,title]=arr;
+             
+          // function will handle text enablinga nd displaying on reload page
+          displayOnpageReload(textTitle,text,title,textarea);
+         
+          // Adding event on delete button
+          Delete.addEventListener('click', () => 
+          {
+            note.remove();
+            updateLS();
+          });
+
+          //adding event on edit button
+          edit.addEventListener('click', () => 
+          {
+                
+            title.disabled = (title.disabled == true) ? false : true;
+            textarea.disabled = (textarea.disabled == true) ? false : true;
+            (title.disabled == false) ?title.classList.remove('hidden') :title.classList.add('hidden');
+            (textarea.disabled == false) ? textarea.classList.remove('hidden') : textarea.classList.add('hidden');
+          });
+        
+
+          // adding event ojn text boxes so their content is saved on change event
+          textarea.addEventListener('change',(event)=>
+          {
+            const value= event.target.value;
+            textarea.value=value; 
+            updateLS();
+          })
+          title.addEventListener('change',(event)=>
+          {
+            const value = event.target.value;
+            title.value = value; 
+            updateLS();
+          })
+           
+        }
+        reloadPage();
+    </script>
+</body>
+
+</html>
